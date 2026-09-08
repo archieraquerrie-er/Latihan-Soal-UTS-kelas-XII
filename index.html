@@ -389,6 +389,35 @@
         </div>
     </div>
 
+    <!-- Modal Khusus Input PIN Guru (Keamanan & Masking Password) -->
+    <div id="pin-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
+            <div class="text-center space-y-1">
+                <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-2 text-xl">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800">Akses Mode Guru</h3>
+                <p class="text-xs text-slate-500">Masukkan PIN Rahasia Guru / Admin untuk membuka rekapitulasi data nilai.</p>
+            </div>
+            
+            <div>
+                <input type="password" id="input-teacher-pin" onkeydown="if(event.key==='Enter') submitTeacherPin()" placeholder="Masukkan PIN Guru..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 text-center text-lg font-bold tracking-widest">
+                <p id="pin-error-msg" class="text-xs text-red-500 font-semibold mt-2 text-center hidden">
+                    <i class="fa-solid fa-circle-exclamation mr-1"></i>PIN yang Anda masukkan salah!
+                </p>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-1">
+                <button onclick="closePinModal()" class="w-1/2 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition">
+                    Batal
+                </button>
+                <button onclick="submitTeacherPin()" class="w-1/2 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow transition">
+                    Verifikasi PIN
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Single Module Script to handle Firebase and Main Exam Logic safely -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -993,35 +1022,44 @@
         }
 
         function toggleTeacherMode() {
-            if (!isTeacherMode) {
-                const inputPin = prompt("Masukkan PIN Akses Guru / Admin:");
-                if (inputPin === null) return; // Batal
-                
-                if (inputPin.trim() !== TEACHER_PIN) {
-                    showCustomModal({
-                        title: "Akses Ditolak",
-                        message: "PIN Guru yang Anda masukkan salah! Silakan coba lagi.",
-                        showCancel: false
-                    });
-                    return;
-                }
-            }
-
-            isTeacherMode = !isTeacherMode;
-            window.isTeacherMode = isTeacherMode;
-
-            const btnText = document.getElementById('teacher-btn-text');
             if (isTeacherMode) {
-                btnText.innerText = "Mode Siswa";
+                // Logout / Kunci kembali ke Mode Siswa
+                isTeacherMode = false;
+                window.isTeacherMode = false;
+                document.getElementById('teacher-btn-text').innerText = "Mode Guru";
+                document.getElementById('view-teacher').classList.add('hidden');
+                document.getElementById('view-start').classList.remove('hidden');
+            } else {
+                // Tampilkan Modal Input PIN Guru
+                document.getElementById('input-teacher-pin').value = '';
+                document.getElementById('pin-error-msg').classList.add('hidden');
+                document.getElementById('pin-modal').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('input-teacher-pin').focus();
+                }, 100);
+            }
+        }
+
+        function closePinModal() {
+            document.getElementById('pin-modal').classList.add('hidden');
+        }
+
+        function submitTeacherPin() {
+            const inputPin = document.getElementById('input-teacher-pin').value.trim();
+            if (inputPin === TEACHER_PIN) {
+                closePinModal();
+                isTeacherMode = true;
+                window.isTeacherMode = true;
+                document.getElementById('teacher-btn-text').innerText = "Keluar Mode Guru";
                 document.getElementById('view-start').classList.add('hidden');
                 document.getElementById('view-exam').classList.add('hidden');
                 document.getElementById('view-result').classList.add('hidden');
                 document.getElementById('view-teacher').classList.remove('hidden');
                 renderRecapTable();
             } else {
-                btnText.innerText = "Mode Guru";
-                document.getElementById('view-teacher').classList.add('hidden');
-                document.getElementById('view-start').classList.remove('hidden');
+                document.getElementById('pin-error-msg').classList.remove('hidden');
+                document.getElementById('input-teacher-pin').value = '';
+                document.getElementById('input-teacher-pin').focus();
             }
         }
 
