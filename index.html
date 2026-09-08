@@ -302,7 +302,7 @@
                                 <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span> Live Realtime
                             </span>
                         </div>
-                        <p class="text-xs text-slate-500">Hasil pengerjaan siswa ter-update secara otomatis dari database cloud.</p>
+                        <p class="text-xs text-slate-500">Hasil pengerjaan siswa ter-update secara otomatis dari database cloud &amp; Google Sheets.</p>
                     </div>
 
                     <div class="flex items-center gap-2">
@@ -313,6 +313,25 @@
                             <i class="fa-solid fa-trash"></i> Hapus Lokal
                         </button>
                     </div>
+                </div>
+
+                <!-- Google Sheets Settings Card -->
+                <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
+                            <i class="fa-solid fa-table text-emerald-600"></i> Integrasi Google Spreadsheet (Google Sheets):
+                        </label>
+                        <span id="sheet-status-badge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-200 text-emerald-800">Tersambung</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="url" id="input-sheet-url" placeholder="Paste Web App URL Google Apps Script di sini..." class="flex-grow px-3 py-2 border border-emerald-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 bg-white">
+                        <button onclick="saveGoogleSheetUrl()" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl shadow transition whitespace-nowrap">
+                            Simpan URL
+                        </button>
+                    </div>
+                    <p class="text-[11px] text-emerald-700 leading-normal">
+                        *Masukkan Web App URL dari Google Apps Script agar semua jawaban siswa otomatis masuk ke baris Google Spreadsheet Anda. Petunjuk lengkap ada di file <code>panduan_share_kuis.md</code>.
+                    </p>
                 </div>
 
                 <!-- Teacher Metrics -->
@@ -1007,41 +1026,64 @@
             localData.unshift(record);
             localStorage.setItem('quiz_recap_matematika_xii', JSON.stringify(localData));
 
+            // Kirim Otomatis ke Google Sheets jika URL Web App sudah dikonfigurasi
+            const sheetUrl = localStorage.getItem('google_sheet_script_url');
+            if (sheetUrl && sheetUrl.startsWith('http')) {
+                try {
+                    fetch(sheetUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(record)
+                    }).catch(err => console.warn('Gagal terkirim ke Google Sheets:', err));
+                } catch (e) {
+                    console.warn('Google Sheets integration error:', e);
+                }
+            }
+
             // Attempt cloud sync if function is available
             if (typeof window.saveToRecapCloud === 'function') {
                 await window.saveToRecapCloud(record);
             }
         }
 
-        function getRecapData() {
-            const localData = JSON.parse(localStorage.getItem('quiz_recap_matematika_xii') || '[]');
-            if (window.remoteRecapData && window.remoteRecapData.length > 0) {
-                return window.remoteRecapData;
-            }
-            return localData;
-        }
-
-        function toggleTeacherMode() {
-            if (isTeacherMode) {
-                // Logout / Kunci kembali ke Mode Siswa
-                isTeacherMode = false;
-                window.isTeacherMode = false;
-                document.getElementById('teacher-btn-text').innerText = "Mode Guru";
-                document.getElementById('view-teacher').classList.add('hidden');
-                document.getElementById('view-start').classList.remove('hidden');
+        function saveGoogleSheetUrl() {
+            const url = document.getElementById('input-sheet-url').value.trim();
+            if (url) {
+                localStorage.setItem('google_sheet_script_url', url);
+                showCustomModal({
+                    title: "Berhasil Disimpan",
+                    message: "URL Google Sheets Web App berhasil disimpan! Jawaban siswa selanjutnya akan otomatis terikim ke Spreadsheet Anda.",
+                    showCancel: false
+                });
             } else {
-                // Tampilkan Modal Input PIN Guru
-                document.getElementById('input-teacher-pin').value = '';
-                document.getElementById('pin-error-msg').classList.add('hidden');
-                document.getElementById('pin-modal').classList.remove('hidden');
-                setTimeout(() => {
-                    document.getElementById('input-teacher-pin').focus();
-                }, 100);
+                localStorage.removeItem('google_sheet_script_url');
+                showCustomModal({
+                    title: "Informasi",
+                    message: "URL Google Sheets dihapus.",
+                    showCancel: false
+                });
             }
+            checkSheetUrlStatus();
         }
 
-        function closePinModal() {
-            document.getElementById('pin-modal').classList.add('hidden');
+        function checkSheetUrlStatus() {
+            const savedUrl = localStorage.getItem('google_sheet_script_url');
+            const badge = document.getElementById('sheet-status-badge');
+            const input = document.getElementById('input-sheet-url');
+            if (savedUrl) {
+                if (badge) {
+                    badge.innerText = "Aktif Terhubung";
+                    badge.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-200 text-emerald-800";
+                }
+                if (input) input.value = savedUrl;
+            } else {
+                if (badge) {
+                    badge.innerText = "Belum Dikonfigurasi";
+                    badge.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800";
+                }
+                if (input) input.value = "";
+            }
         }
 
         function submitTeacherPin() {
@@ -1055,6 +1097,7 @@
                 document.getElementById('view-exam').classList.add('hidden');
                 document.getElementById('view-result').classList.add('hidden');
                 document.getElementById('view-teacher').classList.remove('hidden');
+                checkSheetUrlStatus();
                 renderRecapTable();
             } else {
                 document.getElementById('pin-error-msg').classList.remove('hidden');
