@@ -84,13 +84,71 @@
                     </div>
                 </div>
 
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Nomor Absen <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                            <i class="fa-solid fa-arrow-down-1-9"></i>
+                        </span>
+                        <select id="input-absen" required class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm bg-white">
+                            <option value="">-- Pilih Nomor Absen --</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+                            <option value="35">35</option>
+                            <option value="36">36</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Alamat Email Siswa <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                            <i class="fa-solid fa-envelope"></i>
+                        </span>
+                        <input type="email" id="input-email" required placeholder="contoh: siswa@gmail.com" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+                    </div>
+                </div>
+
                 <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-100 text-xs text-indigo-800 space-y-1">
                     <div class="font-bold flex items-center gap-1.5">
                         <i class="fa-solid fa-circle-info text-indigo-600"></i> Informasi Pengerjaan:
                     </div>
                     <ul class="list-disc pl-5 space-y-0.5 text-slate-600">
                         <li>Jumlah Soal: <strong>25 Soal Pilihan Ganda</strong></li>
-                        <li>Waktu Pengerjaan: Bersiifat fleksibel (dilengkapi timer)</li>
+                        <li><strong>Batasan Akses:</strong> 1 Email hanya diperbolehkan mengirimkan jawaban 1 kali.</li>
                         <li>Nilai dan pembahasan akan langsung ditampilkan setelah kirim.</li>
                     </ul>
                 </div>
@@ -212,10 +270,10 @@
                     </div>
                 </div>
 
-                <div class="pt-4 flex justify-center">
-                    <button onclick="restartExam()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs rounded-xl transition flex items-center gap-2">
-                        <i class="fa-solid fa-rotate-left"></i> Coba Latihan Lagi
-                    </button>
+                <div class="pt-4 flex flex-col items-center gap-2 justify-center">
+                    <div class="px-4 py-2 bg-slate-100 text-slate-600 text-xs font-semibold rounded-xl border border-slate-200 flex items-center gap-2">
+                        <i class="fa-solid fa-lock text-slate-400"></i> Jawaban Anda telah terkunci &amp; tersimpan permanen di database server.
+                    </div>
                 </div>
             </div>
 
@@ -238,8 +296,13 @@
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-4">
                 <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
                     <div>
-                        <h2 class="text-xl font-bold text-slate-800">Rekapitulasi Nilai Siswa</h2>
-                        <p class="text-xs text-slate-500">Hasil pengerjaan siswa ter-update secara real-time.</p>
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-xl font-bold text-slate-800">Rekapitulasi Nilai Siswa</h2>
+                            <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px] flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span> Live Realtime
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500">Hasil pengerjaan siswa ter-update secara otomatis dari database cloud.</p>
                     </div>
 
                     <div class="flex items-center gap-2">
@@ -292,7 +355,9 @@
                                 <th class="p-3">#</th>
                                 <th class="p-3">Waktu Selesai</th>
                                 <th class="p-3">Nama Siswa</th>
-                                <th class="p-3">Kelas</th>
+                                <th class="p-3 text-center">Kelas</th>
+                                <th class="p-3 text-center">No. Absen</th>
+                                <th class="p-3">Email Siswa</th>
                                 <th class="p-3 text-center">Jumlah Benar</th>
                                 <th class="p-3 text-center">Durasi</th>
                                 <th class="p-3 text-right">Nilai Akhir</th>
@@ -407,6 +472,9 @@
     </script>
 
     <script>
+        // PIN Akses Guru / Admin (Diperbarui)
+        const TEACHER_PIN = "PASTISUCCESS11";
+
         let modalResolver = null;
 
         function showCustomModal({ title, message, showCancel = true, confirmText = "OK", cancelText = "Batal" }) {
@@ -619,7 +687,7 @@
         ];
 
         // Exam Runtime Variables
-        let studentData = { nama: "", kelas: "" };
+        let studentData = { nama: "", kelas: "", absen: "", email: "" };
         let userAnswers = new Array(25).fill(null);
         let currentQuestionIndex = 0;
         let timerInterval = null;
@@ -630,14 +698,31 @@
             e.preventDefault();
             const nama = document.getElementById('input-nama').value.trim();
             const kelas = document.getElementById('input-kelas').value;
+            const absen = document.getElementById('input-absen').value;
+            const email = document.getElementById('input-email').value.trim().toLowerCase();
 
-            if (!nama || !kelas) {
-                showCustomModal({ title: "Peringatan", message: "Mohon isi Nama Lengkap dan Kelas Anda terlebih dahulu.", showCancel: false });
+            if (!nama || !kelas || !absen || !email) {
+                showCustomModal({ title: "Peringatan", message: "Mohon lengkapi seluruh data (Nama, Kelas, No. Absen, dan Email).", showCancel: false });
+                return;
+            }
+
+            // Validasi batasan 1 email hanya bisa upload/kerjakan sekali
+            const recapData = getRecapData();
+            const alreadySubmitted = recapData.some(item => (item.email || '').toLowerCase() === email);
+
+            if (alreadySubmitted) {
+                showCustomModal({
+                    title: "Pengerjaan Dibatasi",
+                    message: `Email "${email}" sudah pernah digunakan untuk mengirimkan jawaban kuis ini.\n\nSetiap email hanya dapat digunakan 1 kali pengerjaan.`,
+                    showCancel: false
+                });
                 return;
             }
 
             studentData.nama = nama;
             studentData.kelas = kelas;
+            studentData.absen = absen;
+            studentData.email = email;
 
             // Switch views
             document.getElementById('view-start').classList.add('hidden');
@@ -797,6 +882,8 @@
                 timestamp: new Date().toLocaleString('id-ID'),
                 nama: studentData.nama,
                 kelas: studentData.kelas,
+                absen: studentData.absen,
+                email: studentData.email,
                 score: totalScore,
                 correct: correctCount,
                 timeSpent: document.getElementById('timer-display').innerText
@@ -804,7 +891,7 @@
 
             // Display Results
             document.getElementById('result-nama').innerText = studentData.nama;
-            document.getElementById('result-meta').innerText = `Kelas ${studentData.kelas} • Durasi Waktu: ${document.getElementById('timer-display').innerText}`;
+            document.getElementById('result-meta').innerText = `Kelas ${studentData.kelas} • No. Absen: ${studentData.absen} • ${studentData.email} • Durasi: ${document.getElementById('timer-display').innerText}`;
             document.getElementById('result-score').innerText = totalScore;
             document.getElementById('stat-correct').innerText = `${correctCount} Soal`;
             document.getElementById('stat-wrong').innerText = `${wrongCount} Soal`;
@@ -885,22 +972,6 @@
             });
         }
 
-        async function restartExam() {
-            const confirmRestart = await showCustomModal({
-                title: "Mengulangi Latihan",
-                message: "Apakah Anda yakin ingin mengulang latihan soal dari awal?",
-                showCancel: true,
-                confirmText: "Ulangi",
-                cancelText: "Batal"
-            });
-
-            if (confirmRestart) {
-                document.getElementById('view-result').classList.add('hidden');
-                document.getElementById('view-start').classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
         async function saveToRecap(record) {
             // Save to localStorage
             let localData = JSON.parse(localStorage.getItem('quiz_recap_matematika_xii') || '[]');
@@ -922,6 +993,20 @@
         }
 
         function toggleTeacherMode() {
+            if (!isTeacherMode) {
+                const inputPin = prompt("Masukkan PIN Akses Guru / Admin:");
+                if (inputPin === null) return; // Batal
+                
+                if (inputPin.trim() !== TEACHER_PIN) {
+                    showCustomModal({
+                        title: "Akses Ditolak",
+                        message: "PIN Guru yang Anda masukkan salah! Silakan coba lagi.",
+                        showCancel: false
+                    });
+                    return;
+                }
+            }
+
             isTeacherMode = !isTeacherMode;
             window.isTeacherMode = isTeacherMode;
 
@@ -949,7 +1034,7 @@
             tbody.innerHTML = '';
 
             const filteredData = data.filter(item => {
-                const matchName = (item.nama || '').toLowerCase().includes(searchKeyword);
+                const matchName = (item.nama || '').toLowerCase().includes(searchKeyword) || (item.email || '').toLowerCase().includes(searchKeyword);
                 const matchKelas = selectedKelas === 'ALL' || item.kelas === selectedKelas;
                 return matchName && matchKelas;
             });
@@ -975,7 +1060,7 @@
             if (filteredData.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="7" class="p-6 text-center text-slate-400 italic">Belum ada data rekapitulasi ujian.</td>
+                        <td colspan="9" class="p-6 text-center text-slate-400 italic">Belum ada data rekapitulasi ujian.</td>
                     </tr>
                 `;
                 return;
@@ -988,7 +1073,9 @@
                     <td class="p-3 font-semibold text-slate-400">${idx + 1}</td>
                     <td class="p-3 text-slate-500 whitespace-nowrap">${row.timestamp || '-'}</td>
                     <td class="p-3 font-bold text-slate-800">${row.nama || '-'}</td>
-                    <td class="p-3 text-slate-600">${row.kelas || '-'}</td>
+                    <td class="p-3 text-center text-slate-600">${row.kelas || '-'}</td>
+                    <td class="p-3 text-center font-bold text-indigo-600">${row.absen || '-'}</td>
+                    <td class="p-3 text-slate-600">${row.email || '-'}</td>
                     <td class="p-3 text-center font-semibold text-emerald-600">${row.correct || 0} / 25</td>
                     <td class="p-3 text-center text-slate-500">${row.timeSpent || '-'}</td>
                     <td class="p-3 text-right">
@@ -1014,9 +1101,9 @@
                 return;
             }
 
-            let csv = "No,Tanggal Waktu,Nama Siswa,Kelas,Jumlah Benar,Durasi,Nilai Akhir\n";
+            let csv = "No,Tanggal Waktu,Nama Siswa,Kelas,No Absen,Email Siswa,Jumlah Benar,Durasi,Nilai Akhir\n";
             data.forEach((row, i) => {
-                csv += `"${i + 1}","${row.timestamp || ''}","${row.nama || ''}","${row.kelas || ''}","${row.correct || 0}","${row.timeSpent || ''}","${row.score || 0}"\n`;
+                csv += `"${i + 1}","${row.timestamp || ''}","${row.nama || ''}","${row.kelas || ''}","${row.absen || ''}","${row.email || ''}","${row.correct || 0}","${row.timeSpent || ''}","${row.score || 0}"\n`;
             });
 
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
