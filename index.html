@@ -965,6 +965,23 @@ const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxGInS74Gqcf
         }
 
         // Google Sheets Integration
+        async function saveToRecap(data) {
+    const webAppUrl = localStorage.getItem('googleScriptUrl') || 'https://script.google.com/macros/s/AKfycbxGInS74GqcfyP4DUfIG0dZ6j9OSofpItaCSeFJHJXU/exec';
+
+    try {
+        await fetch(webAppUrl, {
+            method: 'POST',
+            mode: 'no-cors', // Penting agar tidak terkena CORS block dari Google
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        console.log("Data berhasil dikirim ke Google Sheets!");
+    } catch (error) {
+        console.error("Gagal mengirim data:", error);
+    }
+}
         async function saveToRecap(record) {
             // Save local
             let localData = JSON.parse(localStorage.getItem('quiz_recap_matematika_xii') || '[]');
