@@ -113,7 +113,285 @@
 
     <script>
         // URL Apps Script Terbaru kamu
+        const GOOGLE_SCRIPT_URL = "<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal Matematika XII - Limit & Turunan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Mencegah zoom berlebih di Safari iOS saat ketik input */
+        input, select { font-size: 16px !important; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <!-- Header Website -->
+    <header class="bg-blue-600 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-3xl mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-base md:text-lg font-bold">Kuis Matematika XII - Limit & Turunan</h1>
+            <span class="text-xs bg-blue-700 px-2.5 py-1 rounded-full text-blue-100 border border-blue-400">25 Soal</span>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-3xl w-full mx-auto p-4">
+
+        <!-- TAMPILAN 1: FORM IDENTITAS SISWA -->
+        <div id="sectionIdentitas" class="bg-white rounded-2xl shadow-sm p-5 md:p-8 border border-slate-200">
+            <div class="mb-6 border-b pb-4">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-800">Formulir Pengerjaan Kuis</h2>
+                <p class="text-slate-500 text-sm mt-1">Isi identitas diri kamu dengan benar sebelum memulai.</p>
+            </div>
+
+            <form id="formSiswa" onsubmit="mulaiUjian(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold mb-1 text-slate-700">Nama Lengkap</label>
+                    <input type="text" id="inputNama" required placeholder="Masukkan nama lengkap kamu" class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-slate-700">Kelas</label>
+                        <select id="inputKelas" required class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white transition">
+                            <option value="">-- Pilih Kelas --</option>
+                            <option value="XII F-1">XII F-1</option>
+                            <option value="XII F-2">XII F-2</option>
+                            <option value="XII F-3">XII F-3</option>
+                            <option value="XII F-4">XII F-4</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-slate-700">Nomor Absen</label>
+                        <select id="inputAbsen" required class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white transition">
+                            <option value="">-- Pilih No. Absen --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1 text-slate-700">Alamat Email</label>
+                    <input type="email" id="inputEmail" required placeholder="contoh: nama@gmail.com" class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                    <span class="text-xs text-slate-400 mt-1 block">*Email digunakan untuk mencatat pengiriman jawaban di spreadsheet.</span>
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl shadow-md active:scale-[0.99] transition mt-2 text-base">
+                    Mulai Kerjakan Soal
+                </button>
+            </form>
+        </div>
+
+        <!-- TAMPILAN 2: LEMBAR SOAL -->
+        <div id="sectionSoal" class="hidden space-y-5">
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 flex justify-between items-center sticky top-16 z-40 shadow-sm backdrop-blur-md bg-opacity-95">
+                <div>
+                    <span id="displaySiswa" class="font-bold text-blue-900 block text-sm md:text-base">Siswa</span>
+                    <span id="displayMeta" class="text-xs text-blue-700">Kelas</span>
+                </div>
+                <div class="text-right">
+                    <span class="text-[10px] text-slate-500 uppercase tracking-wider block font-semibold">Sisa Waktu</span>
+                    <span id="timer" class="font-mono font-bold text-red-600 text-base md:text-lg">45:00</span>
+                </div>
+            </div>
+
+            <div id="containerSoal" class="space-y-5">
+                <!-- Soal di-render dari JavaScript -->
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
+                <button type="button" onclick="kirimJawaban()" id="btnSubmit" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3.5 rounded-xl shadow-md text-base transition w-full md:w-auto active:scale-[0.99]">
+                    🚀 Selesai & Kirim Jawaban
+                </button>
+            </div>
+        </div>
+
+        <!-- TAMPILAN 3: HASIL & PENILAIAN -->
+        <div id="sectionHasil" class="hidden bg-white rounded-2xl shadow-sm p-6 md:p-8 border border-slate-200 text-center space-y-4">
+            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto text-3xl font-bold">
+                ✓
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800">Jawaban Berhasil Terkirim!</h2>
+            <p class="text-slate-500 text-sm max-w-md mx-auto">Terima kasih telah menyelesaikan latihan soal ini. Nilai kamu sudah otomatis masuk ke rekapitulasi guru.</p>
+            
+            <div class="bg-slate-50 p-6 rounded-2xl inline-block text-center border border-slate-200 min-w-[220px]">
+                <span class="text-xs text-slate-400 uppercase tracking-wider font-semibold block mb-1">Nilai Kamu</span>
+                <span id="displayNilai" class="text-5xl font-extrabold text-blue-600">0</span>
+                <span class="text-xs text-slate-400 block mt-2" id="displayJumlahBenar">Benar: 0 / 25 Soal</span>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-4 text-xs text-slate-400 border-t bg-white mt-8">
+        &copy; Latihan Soal Matematika XI - Limit & Turunan Fungsi
+    </footer>
+
+    <script>
+        // URL Apps Script Terbaru kamu
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzo8ZdacqMnKZCr-Dzx2gOHfpEy0rGprScDDIshR-1GyippWYYa70W1gkmzB4bVxfsx2w/exec";
+
+        // Bank 25 Soal
+        const bankSoal = [
+            { id: 1, q: "Sebuah perusahaan memodelkan fungsi biaya harian C(x) = (x² + 7x + 12) / (x + 3)[cite: 1]. Jika kapasitas produksi mendekati x = 4 unit, maka perkiraan biaya produksi harian perusahaan tersebut adalah...[cite: 1]", opt: ["A. 6 juta rupiah", "B. 7 juta rupiah", "C. 8 juta rupiah", "D. 9 juta rupiah", "E. 10 juta rupiah"], ans: "C" },
+            { id: 2, q: "Nilai dari lim (x→∞) [√(9x² + 18x - 5) - 3x + 2] adalah...[cite: 1]", opt: ["A. 3", "B. 5", "C. 7", "D. 9", "E. ∞"], ans: "B" },
+            { id: 3, q: "Diketahui fungsi f(x) = 2x³ - 4x² + 5x - 7[cite: 1]. Nilai dari turunan pertama fungsi tersebut saat absis x = 2 adalah...[cite: 1]", opt: ["A. 11", "B. 13", "C. 15", "D. 17", "E. 19"], ans: "D" },
+            { id: 4, q: "Jika sebuah fungsi f(x) = (3x + 2)(x - 1)³, maka turunan pertama fungsi tersebut f'(x) adalah...[cite: 1]", opt: ["A. (12x - 1)(x - 1)²", "B. (12x + 1)(x - 1)²", "C. (12x - 5)(x - 1)²", "D. (3x + 2)(x - 1)²", "E. (6x + 1)(x - 1)²"], ans: "A" },
+            { id: 5, q: "Turunan pertama dari fungsi f(x) = (4x - 3) / (3x + 2) adalah f'(x) = ...[cite: 1]", opt: ["A. 17 / (3x + 2)²", "B. 1 / (3x + 2)²", "C. -1 / (3x + 2)²", "D. 24 / (3x + 2)²", "E. -17 / (3x + 2)²"], ans: "A" },
+            { id: 6, q: "Diberikan g(x) = x²+2 (x<3), g(3)=10, g(x)=3x+2 (x>3)[cite: 1]. Pernyataan yang tepat mengenai limit fungsi g(x) saat x mendekati 3 adalah...[cite: 1]", opt: ["A. Nilai lim (x→3) g(x) = 11", "B. Nilai lim (x→3) g(x) = 10", "C. Limit tidak ada karena g(3) = 10", "D. Nilai lim (x→3⁻) g(x) ≠ lim (x→3⁺) g(x)", "E. Nilai lim (x→3) g(x) sama dengan nilai g(3)"], ans: "A" },
+            { id: 7, q: "Nilai dari lim (x→∞) (4x⁴ + 5x² - 2) / (2x⁴ - 3x + 1) adalah...[cite: 1]", opt: ["A. 0", "B. 1", "C. 2", "D. 4", "E. ∞"], ans: "C" },
+            { id: 8, q: "Nilai dari lim (x→∞) [√(16x² - 8x + 5) - √(16x² + 16x - 3)] adalah...[cite: 1]", opt: ["A. -3", "B. -2", "C. -1", "D. 1", "E. 3"], ans: "A" },
+            { id: 9, q: "Diketahui fungsi aljabar f(x) = (1/3)x³ - 2x² - 5x + 8[cite: 1]. Fungsi f(x) akan turun pada interval...[cite: 1]", opt: ["A. -1 < x < 5", "B. x < -1 atau x > 5", "C. -5 < x < 1", "D. 1 < x < 5", "E. x < -5 atau x > 1"], ans: "A" },
+            { id: 10, q: "Grafik fungsi f(x) = (1/3)x³ - 2x² - 5x + 8 akan cekung ke atas pada interval...[cite: 1]", opt: ["A. x < 2", "B. x > 2", "C. x < -2", "D. x > 0", "E. -1 < x < 5"], ans: "B" },
+            { id: 11, q: "Jika lim (x→2) (4x + a) / (3x - 1) = 3, maka nilai konstanta a yang memenuhi adalah...[cite: 1]", opt: ["A. 5", "B. 7", "C. 9", "D. 11", "E. 15"], ans: "B" },
+            { id: 12, q: "Nilai dari lim (x→3) (x² - 9) / (2x - 6) adalah...[cite: 1]", opt: ["A. 2", "B. 3", "C. 4", "D. 5", "E. 6"], ans: "B" },
+            { id: 13, q: "Sebuah benda bergerak sepanjang garis lurus dengan posisi s(t) = t³ - 6t² + 15t + 2[cite: 1]. Kecepatan benda saat t = 3 detik adalah...[cite: 1]", opt: ["A. 0 m/s", "B. 3 m/s", "C. 6 m/s", "D. 9 m/s", "E. 12 m/s"], ans: "C" },
+            { id: 14, q: "Berdasarkan s(t) = t³ - 6t² + 15t + 2, percepatan benda saat t = 4 detik adalah...[cite: 1]", opt: ["A. 6 m/s²", "B. 10 m/s²", "C. 12 m/s²", "D. 18 m/s²", "E. 24 m/s²"], ans: "C" },
+            { id: 15, q: "Suatu objek bergerak dengan persamaan s(t) = 2t³ - 15t² + 36t + 5[cite: 1]. Objek tersebut akan berhenti sesaat pada waktu t sama dengan...[cite: 1]", opt: ["A. t = 1 detik dan t = 3 detik", "B. t = 2 detik dan t = 3 detik", "C. t = 2 detik dan t = 4 detik", "D. t = 3 detik dan t = 5 detik", "E. t = 1 detik dan t = 6 detik"], ans: "B" },
+            { id: 16, q: "Memodelkan keuntungan L(x) = (18x² - 7x + 50) / (3x² + 10)[cite: 1]. Jika produksi barang sangat banyak (x → ∞), batas keuntungan maksimum adalah...[cite: 1]", opt: ["A. 3 juta rupiah", "B. 5 juta rupiah", "C. 6 juta rupiah", "D. 9 juta rupiah", "E. 18 juta rupiah"], ans: "C" },
+            { id: 17, q: "Karton 80 cm x 50 cm dibuat kotak tanpa tutup memotong persegi x cm di sudutnya[cite: 1]. Ukuran x agar volume maksimum memenuhi persamaan...[cite: 1]", opt: ["A. 12x² - 520x + 4000 = 0", "B. 12x² - 260x + 4000 = 0", "C. 4x² - 130x + 1000 = 0", "D. 3x² - 65x + 250 = 0", "E. 6x² - 130x + 500 = 0"], ans: "A" },
+            { id: 18, q: "Turunan pertama dari fungsi f(x) = (2x² - 5)⁴ adalah f'(x) = ...[cite: 1]", opt: ["A. 8x(2x² - 5)³", "B. 16x(2x² - 5)³", "C. 4(2x² - 5)³", "D. 8(2x² - 5)³", "E. 16x²(2x² - 5)³"], ans: "B" },
+            { id: 19, q: "Nilai maksimum relatif dari fungsi f(x) = -x³ + 3x² + 9x - 5 adalah...[cite: 1]", opt: ["A. 12", "B. 16", "C. 20", "D. 22", "E. 27"], ans: "D" },
+            { id: 20, q: "Persamaan garis singgung pada kurva y = x² - 4x + 3 di titik berabsis x = 3 adalah...[cite: 1]", opt: ["A. y = 2x - 6", "B. y = 2x - 3", "C. y = 4x - 12", "D. y = -2x + 6", "E. y = 2x + 3"], ans: "A" },
+            { id: 21, q: "Nilai dari lim (x→4) (x - 4) / (√x - 2) adalah...[cite: 1]", opt: ["A. 1", "B. 2", "C. 4", "D. 8", "E. 16"], ans: "C" },
+            { id: 22, q: "Jika f(x) = √(3x² + 4), maka turunan pertama f'(x) adalah...[cite: 1]", opt: ["A. 3x / √(3x² + 4)", "B. 6x / √(3x² + 4)", "C. 1 / (2√(3x² + 4))", "D. 3 / √(3x² + 4)", "E. 6 / √(3x² + 4)"], ans: "A" },
+            { id: 23, q: "Titik belok dari kurva f(x) = x³ - 6x² + 9x + 2 terletak pada koordinat...[cite: 1]", opt: ["A. (2, 4)", "B. (2, 6)", "C. (3, 2)", "D. (1, 6)", "E. (2, 2)"], ans: "A" },
+            { id: 24, q: "Nilai dari lim (x→∞) [√(25x² + 20x + 7) - (5x - 3)] adalah...[cite: 1]", opt: ["A. 2", "B. 3", "C. 5", "D. 7", "E. 8"], ans: "C" },
+            { id: 25, q: "Biaya total B(x) = x² - 40x + 500[cite: 1]. Biaya produksi minimum dicapai jika diproduksi barang sebanyak...[cite: 1]", opt: ["A. 10 unit", "B. 15 unit", "C. 20 unit", "D. 25 unit", "E. 30 unit"], ans: "C" }
+        ];
+
+        let siswaData = {};
+        let jawabanSiswa = {};
+        let timerInterval;
+
+        // Auto Populate Dropdown Absen (1-36)
+        window.addEventListener('DOMContentLoaded', () => {
+            const selectAbsen = document.getElementById('inputAbsen');
+            for(let i=1; i<=36; i++){
+                let opt = document.createElement('option');
+                opt.value = i;
+                opt.innerText = i;
+                selectAbsen.appendChild(opt);
+            }
+        });
+
+        function mulaiUjian(e) {
+            e.preventDefault();
+            siswaData = {
+                nama: document.getElementById('inputNama').value.trim(),
+                kelas: document.getElementById('inputKelas').value,
+                absen: document.getElementById('inputAbsen').value,
+                email: document.getElementById('inputEmail').value.trim().toLowerCase()
+            };
+
+            document.getElementById('displaySiswa').innerText = siswaData.nama;
+            document.getElementById('displayMeta').innerText = `${siswaData.kelas} | No. Absen: ${siswaData.absen}`;
+
+            document.getElementById('sectionIdentitas').classList.add('hidden');
+            document.getElementById('sectionSoal').classList.remove('hidden');
+
+            renderSoal();
+            startTimer(45 * 60);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderSoal() {
+            const container = document.getElementById('containerSoal');
+            container.innerHTML = bankSoal.map((s, idx) => `
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <p class="font-semibold text-slate-800 leading-relaxed">${idx + 1}. ${s.q}</p>
+                    <div class="space-y-2 pt-1">
+                        ${s.opt.map(o => {
+                            const val = o.charAt(0);
+                            return `
+                                <label class="flex items-center p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-blue-50/50 active:bg-blue-100 transition">
+                                    <input type="radio" name="soal_${s.id}" value="${val}" onchange="pilihJawaban(${s.id}, '${val}')" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                    <span class="ml-3 text-sm text-slate-700">${o}</span>
+                                </label>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function pilihJawaban(id, val) {
+            jawabanSiswa[id] = val;
+        }
+
+        function startTimer(duration) {
+            let timer = duration;
+            timerInterval = setInterval(() => {
+                let minutes = parseInt(timer / 60, 10);
+                let seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                document.getElementById('timer').textContent = minutes + ":" + seconds;
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    kirimJawaban();
+                }
+            }, 1000);
+        }
+
+        async function kirimJawaban() {
+            const btn = document.getElementById('btnSubmit');
+            btn.disabled = true;
+            btn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Mengirimkan Jawaban...
+            `;
+
+            clearInterval(timerInterval);
+
+            // Hitung Skor
+            let benar = 0;
+            bankSoal.forEach(s => {
+                if(jawabanSiswa[s.id] === s.ans) benar++;
+            });
+            const nilai = Math.round((benar / bankSoal.length) * 100);
+
+            // Data yang dikirim ke Google Sheets
+            const payload = {
+                nama: siswaData.nama,
+                kelas: siswaData.kelas,
+                absen: siswaData.absen,
+                email: siswaData.email,
+                benar: benar,
+                durasi: document.getElementById('timer').textContent,
+                nilai: nilai,
+                timestamp: new Date().toLocaleString("id-ID")
+            };
+
+            // Format pengiriman Form URL Encoded (Paling ramah mobile browser)
+            try {
+                const formData = new URLSearchParams();
+                for (const key in payload) {
+                    formData.append(key, payload[key]);
+                }
+
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData.toString()
+                });
+            } catch (err) {
+                console.log("Submit via mobile complete.");
+            }
+
+            // Tampilkan Hasil Akhir ke Siswa
+            document.getElementById('displayNilai').innerText = nilai;
+            document.getElementById('displayJumlahBenar').innerText = `Benar: ${benar} / ${bankSoal.length} Soal`;
+            document.getElementById('sectionSoal').classList.add('hidden');
+            document.getElementById('sectionHasil').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>";
 
         // Bank 25 Soal
         const bankSoal = [
