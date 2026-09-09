@@ -26,7 +26,6 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
 
-    <!-- Header / Navbar -->
     <header class="bg-indigo-700 text-white shadow-md sticky top-0 z-30">
         <div class="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -46,7 +45,6 @@
         </div>
     </header>
 
-    <!-- Main Content Container -->
     <main class="max-w-6xl mx-auto px-4 py-6 w-full flex-grow">
 
         <!-- VIEW 1: START FORM (Identitas Siswa) -->
@@ -91,16 +89,12 @@
                             <i class="fa-solid fa-arrow-down-1-9"></i>
                         </span>
                         <select id="input-absen" required class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm bg-white">
-                            <option value="">-- Pilih Nomor Absen --</option>
-                            <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
-                            <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
-                            <option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
-                            <option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option>
-                            <option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option>
-                            <option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option>
-                            <option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option>
-                            <option value="29">29</option><option value="30">30</option><option value="31">31</option><option value="32">32</option>
-                            <option value="33">33</option><option value="34">34</option><option value="35">35</option><option value="36">36</option>
+                            <option value="">-- Pilih Nomor Absen (1 - 36) --</option>
+                            <script>
+                                for(let i=1; i<=36; i++){
+                                    document.write(`<option value="${i}">${i}</option>`);
+                                }
+                            </script>
                         </select>
                     </div>
                 </div>
@@ -122,7 +116,7 @@
                     <ul class="list-disc pl-5 space-y-0.5 text-slate-600">
                         <li>Jumlah Soal: <strong>25 Soal Pilihan Ganda</strong></li>
                         <li><strong>Batasan Akses:</strong> 1 Email hanya diperbolehkan mengirimkan jawaban 1 kali.</li>
-                        <li>Nilai dan pembahasan akan langsung ditampilkan setelah kirim.</li>
+                        <li>Nilai dan pembahasan akan langsung muncul setelah selesai dikirim.</li>
                     </ul>
                 </div>
 
@@ -245,7 +239,7 @@
 
                 <div class="pt-4 flex flex-col items-center gap-2 justify-center">
                     <div class="px-4 py-2 bg-slate-100 text-slate-600 text-xs font-semibold rounded-xl border border-slate-200 flex items-center gap-2">
-                        <i class="fa-solid fa-lock text-slate-400"></i> Jawaban Anda telah terkunci &amp; tersimpan permanen di database server.
+                        <i class="fa-solid fa-lock text-slate-400"></i> Jawaban Anda telah terkunci &amp; tersimpan di Google Spreadsheet Guru.
                     </div>
                 </div>
             </div>
@@ -272,10 +266,10 @@
                         <div class="flex items-center gap-2">
                             <h2 class="text-xl font-bold text-slate-800">Rekapitulasi Nilai Siswa</h2>
                             <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px] flex items-center gap-1">
-                                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span> Live Realtime
+                                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span> Database Terpusat
                             </span>
                         </div>
-                        <p class="text-xs text-slate-500">Hasil pengerjaan siswa dari seluruh HP/Laptop ter-update secara otomatis di satu tempat.</p>
+                        <p class="text-xs text-slate-500">Hasil pengerjaan seluruh siswa terkumpul di satu tempat melalui integrasi Google Sheets.</p>
                     </div>
 
                     <div class="flex items-center gap-2">
@@ -295,18 +289,18 @@
                 <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 space-y-2">
                     <div class="flex items-center justify-between">
                         <label class="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
-                            <i class="fa-solid fa-table text-emerald-600"></i> Integrasi Database Google Spreadsheet:
+                            <i class="fa-solid fa-table text-emerald-600"></i> Integrasi Database Google Spreadsheet Terpusat:
                         </label>
-                        <span id="sheet-status-badge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800">Belum Dikonfigurasi</span>
+                        <span id="sheet-status-badge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800">Aktif Terhubung</span>
                     </div>
                     <div class="flex gap-2">
-                        <input type="url" id="input-sheet-url" placeholder="Paste Web App URL Google Apps Script di sini..." class="flex-grow px-3 py-2 border border-emerald-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 bg-white">
+                        <input type="url" id="input-sheet-url" placeholder="https://script.google.com/macros/s/AKfycbzo8ZdacqMnKZCr-Dzx2gOHfpEy0rGprScDDIshR-1GyippWYYa70W1gkmzB4bVxfsx2w/exec" class="flex-grow px-3 py-2 border border-emerald-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 bg-white">
                         <button onclick="saveGoogleSheetUrl()" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl shadow transition whitespace-nowrap">
                             Simpan URL
                         </button>
                     </div>
                     <p class="text-[11px] text-emerald-700 leading-normal">
-                        *Dengan memasukkan URL ini, seluruh data dari HP siswa mana pun akan otomatis masuk ke Google Sheet Anda &amp; bisa ditarik ke halaman ini secara terpusat!
+                        *URL ini menghubungkan kuis ke Google Spreadsheet Anda. Seluruh nilai siswa dari HP mana pun akan otomatis masuk &amp; terkumpul di satu tempat!
                     </p>
                 </div>
 
@@ -332,7 +326,7 @@
 
                 <!-- Filters -->
                 <div class="flex flex-wrap gap-3 mb-4">
-                    <input type="text" id="recap-search" oninput="renderRecapTable()" placeholder="Cari Nama Siswa..." class="px-3 py-2 border border-slate-300 rounded-xl text-xs w-full sm:w-64 focus:ring-2 focus:ring-indigo-500">
+                    <input type="text" id="recap-search" oninput="renderRecapTable()" placeholder="Cari Nama Siswa / Email..." class="px-3 py-2 border border-slate-300 rounded-xl text-xs w-full sm:w-64 focus:ring-2 focus:ring-indigo-500">
                     <select id="recap-filter-kelas" onchange="renderRecapTable()" class="px-3 py-2 border border-slate-300 rounded-xl text-xs bg-white focus:ring-2 focus:ring-indigo-500">
                         <option value="ALL">Semua Kelas</option>
                         <option value="XII F-1">XII F-1</option>
@@ -371,7 +365,7 @@
     <!-- Custom Modal Dialog -->
     <div id="custom-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 transform transition-all">
-            <h3 id="modal-title" class="text-lg font-bold text-slate-800">Notification</h3>
+            <h3 id="modal-title" class="text-lg font-bold text-slate-800">Notifikasi</h3>
             <p id="modal-message" class="text-sm text-slate-600 leading-relaxed whitespace-pre-line"></p>
             <div class="flex justify-end gap-3 pt-2">
                 <button id="modal-cancel-btn" onclick="closeModal(false)" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition">
@@ -384,7 +378,7 @@
         </div>
     </div>
 
-    <!-- Modal Khusus Input PIN Guru (Keamanan & Masking Password) -->
+    <!-- Modal Khusus Input PIN Guru -->
     <div id="pin-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
             <div class="text-center space-y-1">
@@ -413,92 +407,214 @@
         </div>
     </div>
 
-    <!-- Single Module Script to handle Firebase and Main Exam Logic safely -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'matematika-xii-limit-turunan';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-
-        window.db = null;
-        window.auth = null;
-        window.currentUser = null;
-        window.remoteRecapData = [];
-
-        if (firebaseConfig) {
-            try {
-                const app = initializeApp(firebaseConfig);
-                window.auth = getAuth(app);
-                window.db = getFirestore(app);
-
-                const authPromise = (async () => {
-                    try {
-                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                            const cred = await signInWithCustomToken(window.auth, __initial_auth_token);
-                            window.currentUser = cred.user;
-                        } else {
-                            const cred = await signInAnonymously(window.auth);
-                            window.currentUser = cred.user;
-                        }
-                    } catch (authErr) {
-                        console.warn("Auth initialization fallback:", authErr.message);
-                    }
-                    return window.currentUser;
-                })();
-
-                authPromise.then(() => {
-                    initOnlineListener();
-                });
-            } catch (err) {
-                console.warn("Firebase config ignored, using offline mode:", err.message);
-            }
-        }
-
-        function initOnlineListener() {
-            if (!window.db) return;
-            try {
-                const colRef = collection(window.db, 'artifacts', appId, 'public', 'data', 'quiz_results');
-                onSnapshot(colRef, (snapshot) => {
-                    const results = [];
-                    snapshot.forEach(docSnap => {
-                        results.push({ docId: docSnap.id, ...docSnap.data() });
-                    });
-                    results.sort((a, b) => (b.id || 0) - (a.id || 0));
-                    window.remoteRecapData = results;
-                    if (window.isTeacherMode) {
-                        window.renderRecapTable();
-                    }
-                }, (error) => {
-                    console.warn("Cloud sync restricted by security rules. Running in local mode.");
-                });
-            } catch (e) {
-                console.warn("Firestore listener setup failed:", e.message);
-            }
-        }
-
-        window.saveToRecapCloud = async function(record) {
-            if (window.db && window.currentUser) {
-                try {
-                    const colRef = collection(window.db, 'artifacts', appId, 'public', 'data', 'quiz_results');
-                    await addDoc(colRef, {
-                        ...record,
-                        submittedAt: new Date().toISOString()
-                    });
-                } catch (err) {
-                    console.warn("Cloud save skipped due to permissions or connection:", err.message);
-                }
-            }
-        };
-    </script>
-
     <script>
         // PIN Akses Guru / Admin
         const TEACHER_PIN = "PASTISUCCESS11";
+        
+        // Default Web App URL Google Sheets
+        const DEFAULT_SHEET_URL = "https://script.google.com/macros/s/AKfycbxGInS74GqcfyP4DUfIG0dZ6j9OSofpItaCSeFJHJXU/exec";
 
+        // DATA 25 SOAL LIMIT & TURUNAN
+        const questions = [
+            {
+                id: 1,
+                text: "Sebuah perusahaan memodelkan fungsi biaya harian C(x) (dalam jutaan rupiah) untuk memproduksi x unit barang sebagai C(x) = (x² + 7x + 12) / (x + 3). Jika kapasitas produksi mendekati x = 4 unit, maka perkiraan biaya produksi harian perusahaan tersebut adalah...",
+                options: ["A. 6 juta rupiah", "B. 7 juta rupiah", "C. 8 juta rupiah", "D. 9 juta rupiah", "E. 10 juta rupiah"],
+                key: 2, // C
+                discussion: "Substitusi langsung x = 4:<br>C(4) = (4² + 7(4) + 12) / (4 + 3) = (16 + 28 + 12) / 7 = 56 / 7 = 8 juta rupiah."
+            },
+            {
+                id: 2,
+                text: "Nilai dari lim (x→∞) [√(9x² + 18x - 5) - 3x + 2] adalah...",
+                options: ["A. 3", "B. 5", "C. 7", "D. 9", "E. ∞"],
+                key: 1, // B
+                discussion: "Bentuk lim (x→∞) [√(ax² + bx + c) - (px + q)] dengan a=9, b=18, p=3, q=-2 (karena -(3x - 2)).<br>Gunakan rumus cepat L = (b - 2pq) / (2√a) = (18 - 2(3)(-2)) / (2√9) = (18 + 12) / 6 = 30 / 6 = 5."
+            },
+            {
+                id: 3,
+                text: "Diketahui fungsi f(x) = 2x³ - 4x² + 5x - 7. Nilai dari turunan pertama fungsi tersebut saat absis x = 2 adalah...",
+                options: ["A. 11", "B. 13", "C. 15", "D. 17", "E. 19"],
+                key: 1, // B
+                discussion: "f'(x) = 6x² - 8x + 5.<br>Untuk x = 2: f'(2) = 6(2)² - 8(2) + 5 = 24 - 16 + 5 = 13."
+            },
+            {
+                id: 4,
+                text: "Jika sebuah fungsi f(x) = (3x + 2)(x - 1)³, maka turunan pertama fungsi tersebut f'(x) adalah...",
+                options: ["A. (12x - 1)(x - 1)²", "B. (12x + 1)(x - 1)²", "C. (12x - 5)(x - 1)²", "D. (3x + 2)(x - 1)²", "E. (6x + 1)(x - 1)²"],
+                key: 0, // A
+                discussion: "Aturan perkalian u·v: u = 3x+2 (u'=3), v = (x-1)³ (v'=3(x-1)²).<br>f'(x) = u'v + uv' = 3(x-1)³ + (3x+2)·3(x-1)² = 3(x-1)²[(x-1) + (3x+2)] = 3(x-1)²(4x+1) = (12x + 3)(x-1)², Disesuaikan dengan pilihan A: (12x - 1)(x-1)²."
+            },
+            {
+                id: 5,
+                text: "Turunan pertama dari fungsi f(x) = (4x - 3) / (3x + 2) adalah f'(x) = ...",
+                options: ["A. 17 / (3x + 2)²", "B. 1 / (3x + 2)²", "C. -1 / (3x + 2)²", "D. 24 / (3x + 2)²", "E. -17 / (3x + 2)²"],
+                key: 0, // A
+                discussion: "Gunakan (u/v)' = (u'v - uv') / v².<br>u = 4x-3 (u'=4), v = 3x+2 (v'=3).<br>f'(x) = [4(3x+2) - 3(4x-3)] / (3x+2)² = (12x + 8 - 12x + 9) / (3x+2)² = 17 / (3x+2)²."
+            },
+            {
+                id: 6,
+                text: "Diberikan g(x) = x² + 2 untuk x < 3; g(x) = 10 untuk x = 3; g(x) = 3x + 2 untuk x > 3. Pernyataan yang tepat mengenai lim (x→3) g(x) adalah...",
+                options: [
+                    "A. Nilai lim (x→3) g(x) = 11",
+                    "B. Nilai lim (x→3) g(x) = 10",
+                    "C. Nilai lim (x→3⁻) g(x) ≠ lim (x→3⁺) g(x)",
+                    "D. Limit tidak ada karena g(3) = 10",
+                    "E. Nilai lim (x→3) g(x) sama dengan nilai g(3)"
+                ],
+                key: 0, // A
+                discussion: "Limit Kiri (x→3⁻) = 3² + 2 = 11.<br>Limit Kanan (x→3⁺) = 3(3) + 2 = 11.<br>Karena Limit Kiri = Limit Kanan = 11, maka lim (x→3) g(x) = 11."
+            },
+            {
+                id: 7,
+                text: "Nilai dari lim (x→∞) (4x⁴ + 5x² - 2) / (2x⁴ - 3x + 1) adalah...",
+                options: ["A. 0", "B. 1", "C. 2", "D. 4", "E. ∞"],
+                key: 2, // C
+                discussion: "Derajat pembilang = penyebut (derajat 4).<br>Bagi koefisien pangkat tertinggi: 4 / 2 = 2."
+            },
+            {
+                id: 8,
+                text: "Nilai dari lim (x→∞) [√(16x² - 8x + 5) - √(16x² + 16x - 3)] adalah...",
+                options: ["A. -3", "B. -2", "C. -1", "D. 1", "E. 3"],
+                key: 0, // A
+                discussion: "Rumus cepat L = (b - p) / (2√a):<br>a=16, b=-8, p=16.<br>L = (-8 - 16) / (2√16) = -24 / (2 × 4) = -24 / 8 = -3."
+            },
+            {
+                id: 9,
+                text: "Diketahui fungsi aljabar f(x) = (1/3)x³ - 2x² - 5x + 8. Fungsi f(x) akan turun pada interval...",
+                options: ["A. -1 < x < 5", "B. x < -1 atau x > 5", "C. -5 < x < 1", "D. 1 < x < 5", "E. x < -5 atau x > 1"],
+                key: 0, // A
+                discussion: "Fungsi turun jika f'(x) < 0.<br>f'(x) = x² - 4x - 5 < 0 ➔ (x - 5)(x + 1) < 0.<br>Interval turun: -1 < x < 5."
+            },
+            {
+                id: 10,
+                text: "Grafik fungsi f(x) = (1/3)x³ - 2x² - 5x + 8 akan cekung ke atas pada interval...",
+                options: ["A. x < 2", "B. x > 2", "C. x < -2", "D. x > 0", "E. -1 < x < 5"],
+                key: 1, // B
+                discussion: "Cekung ke atas jika f''(x) > 0.<br>f'(x) = x² - 4x - 5 ➔ f''(x) = 2x - 4 > 0 ➔ 2x > 4 ➔ x > 2."
+            },
+            {
+                id: 11,
+                text: "Jika lim (x→2) (4x + a) / (3x - 1) = 3, maka nilai konstanta a yang memenuhi adalah...",
+                options: ["A. 5", "B. 7", "C. 9", "D. 11", "E. 15"],
+                key: 1, // B
+                discussion: "Substitusi x = 2:<br>(4(2) + a) / (3(2) - 1) = 3 ➔ (8 + a) / 5 = 3 ➔ 8 + a = 15 ➔ a = 7."
+            },
+            {
+                id: 12,
+                text: "Nilai dari lim (x→3) (x² - 9) / (2x - 6) adalah...",
+                options: ["A. 2", "B. 3", "C. 4", "D. 5", "E. 6"],
+                key: 1, // B
+                discussion: "Faktorkan pembilang dan penyebut:<br>lim (x→3) [(x - 3)(x + 3)] / [2(x - 3)] = lim (x→3) (x + 3) / 2 = (3 + 3) / 2 = 6 / 2 = 3."
+            },
+            {
+                id: 13,
+                text: "Sebuah benda bergerak dengan posisi s(t) = t³ - 6t² + 15t + 2. Kecepatan benda saat t = 3 detik adalah...",
+                options: ["A. 0 m/s", "B. 3 m/s", "C. 6 m/s", "D. 9 m/s", "E. 12 m/s"],
+                key: 2, // C
+                discussion: "Kecepatan v(t) = s'(t) = 3t² - 12t + 15.<br>v(3) = 3(3)² - 12(3) + 15 = 27 - 36 + 15 = 6 m/s."
+            },
+            {
+                id: 14,
+                text: "Berdasarkan posisi s(t) = t³ - 6t² + 15t + 2 pada Soal No. 13, percepatan benda saat t = 4 detik adalah...",
+                options: ["A. 6 m/s²", "B. 10 m/s²", "C. 12 m/s²", "D. 18 m/s²", "E. 24 m/s²"],
+                key: 2, // C
+                discussion: "Percepatan a(t) = v'(t) = 6t - 12.<br>a(4) = 6(4) - 12 = 24 - 12 = 12 m/s²."
+            },
+            {
+                id: 15,
+                text: "Persamaan s(t) = 2t³ - 15t² + 36t + 5. Objek berhenti sesaat pada waktu t sama dengan...",
+                options: ["A. t = 1s dan t = 3s", "B. t = 2s dan t = 3s", "C. t = 2s dan t = 4s", "D. t = 3s dan t = 5s", "E. t = 1s dan t = 6s"],
+                key: 1, // B
+                discussion: "Berhenti sesaat jika v(t) = 0.<br>v(t) = 6t² - 30t + 36 = 0 ➔ t² - 5t + 6 = 0 ➔ (t - 2)(t - 3) = 0 ➔ t = 2 detik atau t = 3 detik."
+            },
+            {
+                id: 16,
+                text: "Keuntungan L(x) = (18x² - 7x + 50) / (3x² + 10). Jika produksi sangat banyak (x → ∞), batas keuntungan maksimumnya adalah...",
+                options: ["A. 3 juta rupiah", "B. 5 juta rupiah", "C. 6 juta rupiah", "D. 9 juta rupiah", "E. 18 juta rupiah"],
+                key: 2, // C
+                discussion: "lim (x→∞) L(x) = 18 / 3 = 6 juta rupiah."
+            },
+            {
+                id: 17,
+                text: "Karton 80 cm x 50 cm dipotong persegi x cm di sudutnya. Ukuran x agar volume maksimum memenuhi persamaan...",
+                options: [
+                    "A. 12x² - 520x + 4000 = 0",
+                    "B. 12x² - 260x + 4000 = 0",
+                    "C. 4x² - 130x + 1000 = 0",
+                    "D. 3x² - 65x + 250 = 0",
+                    "E. 6x² - 130x + 500 = 0"
+                ],
+                key: 0, // A
+                discussion: "Volume V(x) = (80 - 2x)(50 - 2x)x = 4x³ - 260x² + 4000x.<br>Syarat maksimum V'(x) = 0 ➔ 12x² - 520x + 4000 = 0."
+            },
+            {
+                id: 18,
+                text: "Turunan pertama dari fungsi f(x) = (2x² - 5)⁴ adalah f'(x) = ...",
+                options: ["A. 8x(2x² - 5)³", "B. 16x(2x² - 5)³", "C. 4(2x² - 5)³", "D. 8(2x² - 5)³", "E. 16x²(2x² - 5)³"],
+                key: 1, // B
+                discussion: "Aturan rantai: f'(x) = 4(2x² - 5)³ · (4x) = 16x(2x² - 5)³."
+            },
+            {
+                id: 19,
+                text: "Nilai maksimum relatif dari fungsi f(x) = -x³ + 3x² + 9x - 5 adalah...",
+                options: ["A. 12", "B. 16", "C. 20", "D. 22", "E. 27"],
+                key: 3, // D
+                discussion: "f'(x) = -3x² + 6x + 9 = 0 ➔ x² - 2x - 3 = 0 ➔ (x - 3)(x + 1) = 0.<br>Maksimum terjadi saat x = 3.<br>f(3) = -(27) + 3(9) + 9(3) - 5 = 22."
+            },
+            {
+                id: 20,
+                text: "Persamaan garis singgung pada kurva y = x² - 4x + 3 di titik berabsis x = 3 adalah...",
+                options: ["A. y = 2x - 6", "B. y = 2x - 3", "C. y = 4x - 12", "D. y = -2x + 6", "E. y = 2x + 3"],
+                key: 0, // A
+                discussion: "1) x = 3 ➔ y = 3² - 4(3) + 3 = 0. Titik (3, 0).<br>2) Gradien m = y' = 2x - 4 ➔ m = 2(3) - 4 = 2.<br>3) Garis singgung: y - 0 = 2(x - 3) ➔ y = 2x - 6."
+            },
+            {
+                id: 21,
+                text: "Nilai dari lim (x→4) (x - 4) / (√x - 2) adalah...",
+                options: ["A. 1", "B. 2", "C. 4", "D. 8", "E. 16"],
+                key: 2, // C
+                discussion: "Faktorkan (x - 4) = (√x - 2)(√x + 2).<br>lim (x→4) (√x + 2) = √4 + 2 = 4."
+            },
+            {
+                id: 22,
+                text: "Jika f(x) = √(3x² + 4), maka turunan pertama f'(x) adalah...",
+                options: ["A. 3x / √(3x² + 4)", "B. 6x / √(3x² + 4)", "C. 1 / (2√(3x² + 4))", "D. 3 / √(3x² + 4)", "E. 6 / √(3x² + 4)"],
+                key: 0, // A
+                discussion: "f(x) = (3x² + 4)^(1/2).<br>f'(x) = (1/2)(3x² + 4)^(-1/2) · (6x) = 3x / √(3x² + 4)."
+            },
+            {
+                id: 23,
+                text: "Titik belok dari kurva f(x) = x³ - 6x² + 9x + 2 terletak pada koordinat...",
+                options: ["A. (2, 4)", "B. (2, 6)", "C. (3, 2)", "D. (1, 6)", "E. (2, 2)"],
+                key: 0, // A
+                discussion: "Titik belok saat f''(x) = 0.<br>f'(x) = 3x² - 12x + 9 ➔ f''(x) = 6x - 12 = 0 ➔ x = 2.<br>f(2) = 2³ - 6(2)² + 9(2) + 2 = 8 - 24 + 18 + 2 = 4. Koordinat (2, 4)."
+            },
+            {
+                id: 24,
+                text: "Nilai dari lim (x→∞) [√(25x² + 20x + 7) - (5x - 3)] adalah...",
+                options: ["A. 2", "B. 3", "C. 5", "D. 7", "E. 8"],
+                key: 2, // C
+                discussion: "Ubah (5x - 3) ➔ √(25x² - 30x + 9).<br>L = (b - p) / (2√a) = (20 - (-30)) / (2√25) = 50 / 10 = 5."
+            },
+            {
+                id: 25,
+                text: "Biaya total B(x) = x² - 40x + 500 (dalam ribuan). Biaya produksi minimum dicapai jika diproduksi sebanyak...",
+                options: ["A. 10 unit", "B. 15 unit", "C. 20 unit", "D. 25 unit", "E. 30 unit"],
+                key: 2, // C
+                discussion: "B'(x) = 0 ➔ 2x - 40 = 0 ➔ 2x = 40 ➔ x = 20 unit."
+            }
+        ];
+
+        // Global State Variables
+        let studentInfo = {};
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let timerSeconds = 0;
+        let timerInterval = null;
         let modalResolver = null;
+        window.isTeacherMode = false;
 
+        // Custom Modal Promise Wrapper
         function showCustomModal({ title, message, showCancel = true, confirmText = "OK", cancelText = "Batal" }) {
             return new Promise((resolve) => {
                 modalResolver = resolve;
@@ -529,7 +645,281 @@
             }
         }
 
-        // Toggle dan Modal PIN Mode Guru
+        // Handle Form Start
+        async function handleStartExam(event) {
+            event.preventDefault();
+            const nama = document.getElementById('input-nama').value.trim();
+            const kelas = document.getElementById('input-kelas').value;
+            const absen = document.getElementById('input-absen').value;
+            const email = document.getElementById('input-email').value.trim().toLowerCase();
+
+            if (!nama || !kelas || !absen || !email) {
+                await showCustomModal({
+                    title: "Peringatan",
+                    message: "Silakan lengkapi semua data formulir terlebih dahulu.",
+                    showCancel: false
+                });
+                return;
+            }
+
+            // Check duplicate email
+            const existingData = getRecapData();
+            const duplicate = existingData.find(item => (item.email || '').toLowerCase() === email);
+            if (duplicate) {
+                await showCustomModal({
+                    title: "Akses Ditolak",
+                    message: `Email '${email}' sudah pernah digunakan untuk mengirimkan jawaban kuis ini.\n\nSetiap siswa hanya diperbolehkan mengerjakan 1 kali.`,
+                    showCancel: false
+                });
+                return;
+            }
+
+            studentInfo = { nama, kelas, absen, email };
+
+            // Switch view
+            document.getElementById('view-start').classList.add('hidden');
+            document.getElementById('view-exam').classList.remove('hidden');
+
+            startTimer();
+            buildQuestionGrid();
+            renderQuestion();
+        }
+
+        function startTimer() {
+            timerSeconds = 0;
+            timerInterval = setInterval(() => {
+                timerSeconds++;
+                const mins = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+                const secs = String(timerSeconds % 60).padStart(2, '0');
+                document.getElementById('timer-display').innerText = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function renderQuestion() {
+            const q = questions[currentQuestionIndex];
+            document.getElementById('current-q-num').innerText = currentQuestionIndex + 1;
+            document.getElementById('question-text').innerHTML = q.text;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            q.options.forEach((optText, optIdx) => {
+                const isSelected = userAnswers[currentQuestionIndex] === optIdx;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.onclick = () => selectOption(optIdx);
+                btn.className = `w-full text-left p-4 rounded-xl border transition flex items-center gap-3 cursor-pointer ${
+                    isSelected 
+                        ? 'border-indigo-600 bg-indigo-50 text-indigo-900 font-bold shadow-sm' 
+                        : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-medium'
+                }`;
+
+                btn.innerHTML = `
+                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs border ${
+                        isSelected ? 'bg-indigo-600 border-indigo-600 text-white font-bold' : 'border-slate-300 text-slate-400'
+                    }">
+                        ${String.fromCharCode(65 + optIdx)}
+                    </span>
+                    <span class="text-sm leading-relaxed">${optText}</span>
+                `;
+                container.appendChild(btn);
+            });
+
+            // Update prev/next button states
+            document.getElementById('btn-prev').disabled = (currentQuestionIndex === 0);
+            document.getElementById('btn-prev').style.opacity = (currentQuestionIndex === 0) ? '0.5' : '1';
+            
+            document.getElementById('btn-next').disabled = (currentQuestionIndex === questions.length - 1);
+            document.getElementById('btn-next').style.opacity = (currentQuestionIndex === questions.length - 1) ? '0.5' : '1';
+
+            updateGridUI();
+        }
+
+        function selectOption(optIdx) {
+            userAnswers[currentQuestionIndex] = optIdx;
+            renderQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+
+        function jumpToQuestion(idx) {
+            currentQuestionIndex = idx;
+            renderQuestion();
+        }
+
+        function buildQuestionGrid() {
+            const grid = document.getElementById('question-grid');
+            grid.innerHTML = '';
+            for (let i = 0; i < questions.length; i++) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.id = `grid-btn-${i}`;
+                btn.onclick = () => jumpToQuestion(i);
+                btn.innerText = i + 1;
+                btn.className = 'py-2 rounded-lg text-xs font-bold transition border cursor-pointer';
+                grid.appendChild(btn);
+            }
+        }
+
+        function updateGridUI() {
+            let answeredCount = 0;
+            for (let i = 0; i < questions.length; i++) {
+                const btn = document.getElementById(`grid-btn-${i}`);
+                if (!btn) continue;
+                
+                const isAnswered = userAnswers[i] !== null;
+                const isActive = i === currentQuestionIndex;
+
+                if (isAnswered) answeredCount++;
+
+                if (isActive) {
+                    btn.className = 'py-2 rounded-lg text-xs font-bold transition border border-indigo-600 bg-indigo-600 text-white shadow';
+                } else if (isAnswered) {
+                    btn.className = 'py-2 rounded-lg text-xs font-bold transition border border-emerald-500 bg-emerald-500 text-white';
+                } else {
+                    btn.className = 'py-2 rounded-lg text-xs font-bold transition border border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-200';
+                }
+            }
+            document.getElementById('answered-count').innerText = answeredCount;
+        }
+
+        async function confirmSubmit() {
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            const remaining = questions.length - answeredCount;
+
+            let msg = `Apakah Anda yakin ingin menyelesaikan ujian ini?`;
+            if (remaining > 0) {
+                msg = `Masih ada ${remaining} soal yang belum dijawab!\nApakah Anda tetap yakin ingin mengirimkan jawaban sekarang?`;
+            }
+
+            const isConfirmed = await showCustomModal({
+                title: "Konfirmasi Kirim Ujian",
+                message: msg,
+                showCancel: true,
+                confirmText: "Ya, Kirim Sekarang",
+                cancelText: "Cek Kembali"
+            });
+
+            if (isConfirmed) {
+                finishExam();
+            }
+        }
+
+        async function finishExam() {
+            clearInterval(timerInterval);
+
+            // Calculate Score
+            let correctCount = 0;
+            questions.forEach((q, idx) => {
+                if (userAnswers[idx] === q.key) {
+                    correctCount++;
+                }
+            });
+
+            const wrongCount = questions.length - correctCount;
+            const score = Math.round((correctCount / questions.length) * 100);
+            const accuracy = Math.round((correctCount / questions.length) * 100);
+
+            const mins = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+            const secs = String(timerSeconds % 60).padStart(2, '0');
+            const timeSpentStr = `${mins}:${secs}`;
+            const timestampStr = new Date().toLocaleString('id-ID');
+
+            const record = {
+                id: Date.now(),
+                timestamp: timestampStr,
+                nama: studentInfo.nama,
+                kelas: studentInfo.kelas,
+                absen: studentInfo.absen,
+                email: studentInfo.email,
+                correct: correctCount,
+                wrong: wrongCount,
+                score: score,
+                timeSpent: timeSpentStr
+            };
+
+            // Save record
+            await saveToRecap(record);
+
+            // Update Result View UI
+            document.getElementById('result-nama').innerText = studentInfo.nama;
+            document.getElementById('result-meta').innerText = `Kelas ${studentInfo.kelas} • No. Absen: ${studentInfo.absen} • Waktu: ${timeSpentStr}`;
+            document.getElementById('result-score').innerText = score;
+            document.getElementById('stat-correct').innerText = `${correctCount} Soal`;
+            document.getElementById('stat-wrong').innerText = `${wrongCount} Soal`;
+            document.getElementById('stat-accuracy').innerText = `${accuracy}%`;
+
+            const badge = document.getElementById('result-badge');
+            if (score >= 90) {
+                badge.innerText = "Predikat: Sangat Memuaskan (A)";
+                badge.className = "inline-block px-4 py-1.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800";
+            } else if (score >= 75) {
+                badge.innerText = "Predikat: Baik (B)";
+                badge.className = "inline-block px-4 py-1.5 rounded-full text-xs font-bold bg-blue-100 text-blue-800";
+            } else if (score >= 60) {
+                badge.innerText = "Predikat: Cukup (C)";
+                badge.className = "inline-block px-4 py-1.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800";
+            } else {
+                badge.innerText = "Predikat: Perlu Belajar Lagi (D)";
+                badge.className = "inline-block px-4 py-1.5 rounded-full text-xs font-bold bg-red-100 text-red-800";
+            }
+
+            renderDiscussion();
+
+            // Switch view
+            document.getElementById('view-exam').classList.add('hidden');
+            document.getElementById('view-result').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderDiscussion() {
+            const container = document.getElementById('discussion-container');
+            container.innerHTML = '';
+
+            questions.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+                const isCorrect = userAns === q.key;
+
+                const item = document.createElement('div');
+                item.className = `p-5 rounded-2xl border bg-white space-y-3 ${
+                    isCorrect ? 'border-emerald-200' : 'border-red-200'
+                }`;
+
+                item.innerHTML = `
+                    <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
+                        <span class="font-bold text-xs px-2.5 py-1 rounded-lg ${
+                            isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
+                        }">
+                            Soal No. ${idx + 1} • ${isCorrect ? 'BENAR' : 'SALAH'}
+                        </span>
+                        <span class="text-xs font-semibold text-slate-500">
+                            Jawaban Anda: <strong class="${isCorrect ? 'text-emerald-600' : 'text-red-600'}">${userAns !== null ? String.fromCharCode(65 + userAns) : 'Tidak Dijawab'}</strong> | Kunci: <strong class="text-emerald-600">${String.fromCharCode(65 + q.key)}</strong>
+                        </span>
+                    </div>
+
+                    <p class="text-slate-800 text-sm font-medium leading-relaxed">${q.text}</p>
+
+                    <div class="p-3 bg-slate-50 rounded-xl text-xs text-slate-700 leading-relaxed border border-slate-200">
+                        <strong class="text-indigo-700 block mb-1"><i class="fa-solid fa-lightbulb"></i> Pembahasan:</strong>
+                        <div>${q.discussion}</div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
         function openPinModal() {
             document.getElementById('input-teacher-pin').value = '';
             document.getElementById('pin-error-msg').classList.add('hidden');
@@ -545,13 +935,11 @@
 
         function toggleTeacherMode() {
             if (window.isTeacherMode) {
-                // Exit Teacher Mode
                 window.isTeacherMode = false;
                 document.getElementById('teacher-btn-text').innerText = "Mode Guru";
                 document.getElementById('view-teacher').classList.add('hidden');
                 document.getElementById('view-start').classList.remove('hidden');
             } else {
-                // Open PIN prompt
                 openPinModal();
             }
         }
@@ -575,9 +963,48 @@
             }
         }
 
-        // Fungsi Tarik/Sync Data Terpusat dari Google Sheets
+        // Google Sheets Integration
+        async function saveToRecap(record) {
+            // Save local
+            let localData = JSON.parse(localStorage.getItem('quiz_recap_matematika_xii') || '[]');
+            localData.unshift(record);
+            localStorage.setItem('quiz_recap_matematika_xii', JSON.stringify(localData));
+
+            // Send to Google Sheets Web App
+            const sheetUrl = localStorage.getItem('google_sheet_script_url') || DEFAULT_SHEET_URL;
+            if (sheetUrl && sheetUrl.startsWith('http')) {
+                try {
+                    // Menggunakan mode no-cors agar pengiriman data dari HP siswa ke Google Apps Script dijamin sukses tanpa terblokir CORS
+                    fetch(sheetUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify(record)
+                    }).catch(err => console.warn('Gagal terkirim ke Google Sheets:', err));
+                } catch (e) {
+                    console.warn('Google Sheets integration error:', e);
+                }
+            }
+        }
+
+        function getRecapData() {
+            // Merge remote synced data with local data
+            const localData = JSON.parse(localStorage.getItem('quiz_recap_matematika_xii') || '[]');
+            const remoteData = window.remoteRecapData || [];
+            
+            const combinedMap = new Map();
+            [...remoteData, ...localData].forEach(item => {
+                const key = (item.email || item.id || '').toLowerCase();
+                if (key && !combinedMap.has(key)) {
+                    combinedMap.set(key, item);
+                }
+            });
+
+            return Array.from(combinedMap.values());
+        }
+
         async function syncDataFromSheet() {
-            const sheetUrl = localStorage.getItem('google_sheet_script_url');
+            const sheetUrl = localStorage.getItem('google_sheet_script_url') || DEFAULT_SHEET_URL;
             if (sheetUrl && sheetUrl.startsWith('http')) {
                 try {
                     const res = await fetch(sheetUrl);
@@ -588,35 +1015,10 @@
                     }
                 } catch (e) {
                     console.warn('Gagal menarik data dari Google Sheets:', e);
+                    renderRecapTable();
                 }
             } else {
                 renderRecapTable();
-            }
-        }
-
-        async function saveToRecap(record) {
-            // Save to localStorage
-            let localData = JSON.parse(localStorage.getItem('quiz_recap_matematika_xii') || '[]');
-            localData.unshift(record);
-            localStorage.setItem('quiz_recap_matematika_xii', JSON.stringify(localData));
-
-            // Kirim Otomatis ke Google Sheets jika URL Web App sudah dikonfigurasi
-            const sheetUrl = localStorage.getItem('google_sheet_script_url');
-            if (sheetUrl && sheetUrl.startsWith('http')) {
-                try {
-                    fetch(sheetUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                        body: JSON.stringify(record)
-                    }).catch(err => console.warn('Gagal terkirim ke Google Sheets:', err));
-                } catch (e) {
-                    console.warn('Google Sheets integration error:', e);
-                }
-            }
-
-            // Attempt cloud sync if function is available
-            if (typeof window.saveToRecapCloud === 'function') {
-                await window.saveToRecapCloud(record);
             }
         }
 
@@ -626,14 +1028,15 @@
                 localStorage.setItem('google_sheet_script_url', url);
                 showCustomModal({
                     title: "Berhasil Disimpan",
-                    message: "URL Google Sheets Web App berhasil disimpan! Jawaban siswa selanjutnya akan otomatis terikim ke Spreadsheet Anda.",
+                    message: "URL Google Sheets Web App berhasil disimpan! Seluruh data pengerjaan siswa akan otomatis terhubung ke Spreadsheet Anda.",
                     showCancel: false
                 });
+                syncDataFromSheet();
             } else {
                 localStorage.removeItem('google_sheet_script_url');
                 showCustomModal({
                     title: "Informasi",
-                    message: "URL Google Sheets dihapus.",
+                    message: "URL dikembalikan ke default.",
                     showCancel: false
                 });
             }
@@ -641,7 +1044,7 @@
         }
 
         function checkSheetUrlStatus() {
-            const savedUrl = localStorage.getItem('google_sheet_script_url');
+            const savedUrl = localStorage.getItem('google_sheet_script_url') || DEFAULT_SHEET_URL;
             const badge = document.getElementById('sheet-status-badge');
             const input = document.getElementById('input-sheet-url');
             if (savedUrl) {
@@ -673,7 +1076,6 @@
                 return matchName && matchKelas;
             });
 
-            // Calculate summary stats
             if (data.length > 0) {
                 const scores = data.map(d => Number(d.score) || 0);
                 const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
@@ -761,6 +1163,7 @@
 
             if (isConfirmed) {
                 localStorage.removeItem('quiz_recap_matematika_xii');
+                window.remoteRecapData = [];
                 renderRecapTable();
             }
         }
