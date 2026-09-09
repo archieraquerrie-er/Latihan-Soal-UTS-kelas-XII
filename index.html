@@ -12,7 +12,7 @@
 </head>
 <body class="bg-slate-100 font-sans text-slate-800 min-h-screen flex flex-col justify-between">
 
-    <!-- HEADER WEBSITES -->
+    <!-- HEADER WEBSITE -->
     <header class="bg-blue-700 text-white shadow-lg sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-3">
@@ -95,7 +95,7 @@
                         <p id="teksSoal" class="text-slate-800 font-medium text-base leading-relaxed mb-6"></p>
 
                         <div id="containerOpsi" class="space-y-3">
-                            <!-- Opsi Pilihan Jawaban di-render lewat JS -->
+                            <!-- Opsi Pilihan Jawaban di-render via JS -->
                         </div>
                     </div>
 
@@ -158,31 +158,31 @@
 
     <script>
         const bankSoal = [
-            { id: 1, q: "Sebuah perusahaan memodelkan fungsi biaya harian C(x) = (x² + 7x + 12) / (x + 3)[cite: 1]. Jika kapasitas produksi mendekati x = 4 unit, maka perkiraan biaya produksi harian perusahaan tersebut adalah...[cite: 1]", opt: ["A. 6 juta rupiah", "B. 7 juta rupiah", "C. 8 juta rupiah", "D. 9 juta rupiah", "E. 10 juta rupiah"], ans: "C" },
-            { id: 2, q: "Nilai dari lim (x→∞) [√(9x² + 18x - 5) - 3x + 2] adalah...[cite: 1]", opt: ["A. 3", "B. 5", "C. 7", "D. 9", "E. ∞"], ans: "B" },
-            { id: 3, q: "Diketahui fungsi f(x) = 2x³ - 4x² + 5x - 7[cite: 1]. Nilai dari turunan pertama fungsi tersebut saat absis x = 2 adalah...[cite: 1]", opt: ["A. 11", "B. 13", "C. 15", "D. 17", "E. 19"], ans: "D" },
-            { id: 4, q: "Jika sebuah fungsi f(x) = (3x + 2)(x - 1)³, maka turunan pertama fungsi tersebut f'(x) adalah...[cite: 1]", opt: ["A. (12x - 1)(x - 1)²", "B. (12x + 1)(x - 1)²", "C. (12x - 5)(x - 1)²", "D. (3x + 2)(x - 1)²", "E. (6x + 1)(x - 1)²"], ans: "A" },
-            { id: 5, q: "Turunan pertama dari fungsi f(x) = (4x - 3) / (3x + 2) adalah f'(x) = ...[cite: 1]", opt: ["A. 17 / (3x + 2)²", "B. 1 / (3x + 2)²", "C. -1 / (3x + 2)²", "D. 24 / (3x + 2)²", "E. -17 / (3x + 2)²"], ans: "A" },
-            { id: 6, q: "Diberikan g(x) = x²+2 (x<3), g(3)=10, g(x)=3x+2 (x>3)[cite: 1]. Pernyataan yang tepat mengenai limit fungsi g(x) saat x mendekati 3 adalah...[cite: 1]", opt: ["A. Nilai lim (x→3) g(x) = 11", "B. Nilai lim (x→3) g(x) = 10", "C. Limit tidak ada karena g(3) = 10", "D. Nilai lim (x→3⁻) g(x) ≠ lim (x→3⁺) g(x)", "E. Nilai lim (x→3) g(x) sama dengan nilai g(3)"], ans: "A" },
-            { id: 7, q: "Nilai dari lim (x→∞) (4x⁴ + 5x² - 2) / (2x⁴ - 3x + 1) adalah...[cite: 1]", opt: ["A. 0", "B. 1", "C. 2", "D. 4", "E. ∞"], ans: "C" },
-            { id: 8, q: "Nilai dari lim (x→∞) [√(16x² - 8x + 5) - √(16x² + 16x - 3)] adalah...[cite: 1]", opt: ["A. -3", "B. -2", "C. -1", "D. 1", "E. 3"], ans: "A" },
-            { id: 9, q: "Diketahui fungsi aljabar f(x) = (1/3)x³ - 2x² - 5x + 8[cite: 1]. Fungsi f(x) akan turun pada interval...[cite: 1]", opt: ["A. -1 < x < 5", "B. x < -1 atau x > 5", "C. -5 < x < 1", "D. 1 < x < 5", "E. x < -5 atau x > 1"], ans: "A" },
-            { id: 10, q: "Grafik fungsi f(x) = (1/3)x³ - 2x² - 5x + 8 akan cekung ke atas pada interval...[cite: 1]", opt: ["A. x < 2", "B. x > 2", "C. x < -2", "D. x > 0", "E. -1 < x < 5"], ans: "B" },
-            { id: 11, q: "Jika lim (x→2) (4x + a) / (3x - 1) = 3, maka nilai konstanta a yang memenuhi adalah...[cite: 1]", opt: ["A. 5", "B. 7", "C. 9", "D. 11", "E. 15"], ans: "B" },
-            { id: 12, q: "Nilai dari lim (x→3) (x² - 9) / (2x - 6) adalah...[cite: 1]", opt: ["A. 2", "B. 3", "C. 4", "D. 5", "E. 6"], ans: "B" },
-            { id: 13, q: "Sebuah benda bergerak sepanjang garis lurus dengan posisi s(t) = t³ - 6t² + 15t + 2[cite: 1]. Kecepatan benda saat t = 3 detik adalah...[cite: 1]", opt: ["A. 0 m/s", "B. 3 m/s", "C. 6 m/s", "D. 9 m/s", "E. 12 m/s"], ans: "C" },
-            { id: 14, q: "Berdasarkan s(t) = t³ - 6t² + 15t + 2, percepatan benda saat t = 4 detik adalah...[cite: 1]", opt: ["A. 6 m/s²", "B. 10 m/s²", "C. 12 m/s²", "D. 18 m/s²", "E. 24 m/s²"], ans: "C" },
-            { id: 15, q: "Suatu objek bergerak dengan persamaan s(t) = 2t³ - 15t² + 36t + 5[cite: 1]. Objek tersebut akan berhenti sesaat pada waktu t sama dengan...[cite: 1]", opt: ["A. t = 1 detik dan t = 3 detik", "B. t = 2 detik dan t = 3 detik", "C. t = 2 detik dan t = 4 detik", "D. t = 3 detik dan t = 5 detik", "E. t = 1 detik dan t = 6 detik"], ans: "B" },
-            { id: 16, q: "Memodelkan keuntungan L(x) = (18x² - 7x + 50) / (3x² + 10)[cite: 1]. Jika produksi barang sangat banyak (x → ∞), batas keuntungan maksimum adalah...[cite: 1]", opt: ["A. 3 juta rupiah", "B. 5 juta rupiah", "C. 6 juta rupiah", "D. 9 juta rupiah", "E. 18 juta rupiah"], ans: "C" },
-            { id: 17, q: "Karton 80 cm x 50 cm dibuat kotak tanpa tutup memotong persegi x cm di sudutnya[cite: 1]. Ukuran x agar volume maksimum memenuhi persamaan...[cite: 1]", opt: ["A. 12x² - 520x + 4000 = 0", "B. 12x² - 260x + 4000 = 0", "C. 4x² - 130x + 1000 = 0", "D. 3x² - 65x + 250 = 0", "E. 6x² - 130x + 500 = 0"], ans: "A" },
-            { id: 18, q: "Turunan pertama dari fungsi f(x) = (2x² - 5)⁴ adalah f'(x) = ...[cite: 1]", opt: ["A. 8x(2x² - 5)³", "B. 16x(2x² - 5)³", "C. 4(2x² - 5)³", "D. 8(2x² - 5)³", "E. 16x²(2x² - 5)³"], ans: "B" },
-            { id: 19, q: "Nilai maksimum relatif dari fungsi f(x) = -x³ + 3x² + 9x - 5 adalah...[cite: 1]", opt: ["A. 12", "B. 16", "C. 20", "D. 22", "E. 27"], ans: "D" },
-            { id: 20, q: "Persamaan garis singgung pada kurva y = x² - 4x + 3 di titik berabsis x = 3 adalah...[cite: 1]", opt: ["A. y = 2x - 6", "B. y = 2x - 3", "C. y = 4x - 12", "D. y = -2x + 6", "E. y = 2x + 3"], ans: "A" },
-            { id: 21, q: "Nilai dari lim (x→4) (x - 4) / (√x - 2) adalah...[cite: 1]", opt: ["A. 1", "B. 2", "C. 4", "D. 8", "E. 16"], ans: "C" },
-            { id: 22, q: "Jika f(x) = √(3x² + 4), maka turunan pertama f'(x) adalah...[cite: 1]", opt: ["A. 3x / √(3x² + 4)", "B. 6x / √(3x² + 4)", "C. 1 / (2√(3x² + 4))", "D. 3 / √(3x² + 4)", "E. 6 / √(3x² + 4)"], ans: "A" },
-            { id: 23, q: "Titik belok dari kurva f(x) = x³ - 6x² + 9x + 2 terletak pada koordinat...[cite: 1]", opt: ["A. (2, 4)", "B. (2, 6)", "C. (3, 2)", "D. (1, 6)", "E. (2, 2)"], ans: "A" },
-            { id: 24, q: "Nilai dari lim (x→∞) [√(25x² + 20x + 7) - (5x - 3)] adalah...[cite: 1]", opt: ["A. 2", "B. 3", "C. 5", "D. 7", "E. 8"], ans: "C" },
-            { id: 25, q: "Biaya total B(x) = x² - 40x + 500[cite: 1]. Biaya produksi minimum dicapai jika diproduksi barang sebanyak...[cite: 1]", opt: ["A. 10 unit", "B. 15 unit", "C. 20 unit", "D. 25 unit", "E. 30 unit"], ans: "C" }
+            { id: 1, q: "Sebuah perusahaan memodelkan fungsi biaya harian C(x) = (x² + 7x + 12) / (x + 3). Jika kapasitas produksi mendekati x = 4 unit, maka perkiraan biaya produksi harian perusahaan tersebut adalah...", opt: ["A. 6 juta rupiah", "B. 7 juta rupiah", "C. 8 juta rupiah", "D. 9 juta rupiah", "E. 10 juta rupiah"], ans: "C" },
+            { id: 2, q: "Nilai dari lim (x→∞) [√(9x² + 18x - 5) - 3x + 2] adalah...", opt: ["A. 3", "B. 5", "C. 7", "D. 9", "E. ∞"], ans: "B" },
+            { id: 3, q: "Diketahui fungsi f(x) = 2x³ - 4x² + 5x - 7. Nilai dari turunan pertama fungsi tersebut saat absis x = 2 adalah...", opt: ["A. 11", "B. 13", "C. 15", "D. 17", "E. 19"], ans: "D" },
+            { id: 4, q: "Jika sebuah fungsi f(x) = (3x + 2)(x - 1)³, maka turunan pertama fungsi tersebut f'(x) adalah...", opt: ["A. (12x - 1)(x - 1)²", "B. (12x + 1)(x - 1)²", "C. (12x - 5)(x - 1)²", "D. (3x + 2)(x - 1)²", "E. (6x + 1)(x - 1)²"], ans: "A" },
+            { id: 5, q: "Turunan pertama dari fungsi f(x) = (4x - 3) / (3x + 2) adalah f'(x) = ...", opt: ["A. 17 / (3x + 2)²", "B. 1 / (3x + 2)²", "C. -1 / (3x + 2)²", "D. 24 / (3x + 2)²", "E. -17 / (3x + 2)²"], ans: "A" },
+            { id: 6, q: "Diberikan g(x) = x²+2 (x<3), g(3)=10, g(x)=3x+2 (x>3). Pernyataan yang tepat mengenai limit fungsi g(x) saat x mendekati 3 adalah...", opt: ["A. Nilai lim (x→3) g(x) = 11", "B. Nilai lim (x→3) g(x) = 10", "C. Limit tidak ada karena g(3) = 10", "D. Nilai lim (x→3⁻) g(x) ≠ lim (x→3⁺) g(x)", "E. Nilai lim (x→3) g(x) sama dengan nilai g(3)"], ans: "A" },
+            { id: 7, q: "Nilai dari lim (x→∞) (4x⁴ + 5x² - 2) / (2x⁴ - 3x + 1) adalah...", opt: ["A. 0", "B. 1", "C. 2", "D. 4", "E. ∞"], ans: "C" },
+            { id: 8, q: "Nilai dari lim (x→∞) [√(16x² - 8x + 5) - √(16x² + 16x - 3)] adalah...", opt: ["A. -3", "B. -2", "C. -1", "D. 1", "E. 3"], ans: "A" },
+            { id: 9, q: "Diketahui fungsi aljabar f(x) = (1/3)x³ - 2x² - 5x + 8. Fungsi f(x) akan turun pada interval...", opt: ["A. -1 < x < 5", "B. x < -1 atau x > 5", "C. -5 < x < 1", "D. 1 < x < 5", "E. x < -5 atau x > 1"], ans: "A" },
+            { id: 10, q: "Grafik fungsi f(x) = (1/3)x³ - 2x² - 5x + 8 akan cekung ke atas pada interval...", opt: ["A. x < 2", "B. x > 2", "C. x < -2", "D. x > 0", "E. -1 < x < 5"], ans: "B" },
+            { id: 11, q: "Jika lim (x→2) (4x + a) / (3x - 1) = 3, maka nilai konstanta a yang memenuhi adalah...", opt: ["A. 5", "B. 7", "C. 9", "D. 11", "E. 15"], ans: "B" },
+            { id: 12, q: "Nilai dari lim (x→3) (x² - 9) / (2x - 6) adalah...", opt: ["A. 2", "B. 3", "C. 4", "D. 5", "E. 6"], ans: "B" },
+            { id: 13, q: "Sebuah benda bergerak sepanjang garis lurus dengan posisi s(t) = t³ - 6t² + 15t + 2. Kecepatan benda saat t = 3 detik adalah...", opt: ["A. 0 m/s", "B. 3 m/s", "C. 6 m/s", "D. 9 m/s", "E. 12 m/s"], ans: "C" },
+            { id: 14, q: "Berdasarkan s(t) = t³ - 6t² + 15t + 2, percepatan benda saat t = 4 detik adalah...", opt: ["A. 6 m/s²", "B. 10 m/s²", "C. 12 m/s²", "D. 18 m/s²", "E. 24 m/s²"], ans: "C" },
+            { id: 15, q: "Suatu objek bergerak dengan persamaan s(t) = 2t³ - 15t² + 36t + 5. Objek tersebut akan berhenti sesaat pada waktu t sama dengan...", opt: ["A. t = 1 detik dan t = 3 detik", "B. t = 2 detik dan t = 3 detik", "C. t = 2 detik dan t = 4 detik", "D. t = 3 detik dan t = 5 detik", "E. t = 1 detik dan t = 6 detik"], ans: "B" },
+            { id: 16, q: "Memodelkan keuntungan L(x) = (18x² - 7x + 50) / (3x² + 10). Jika produksi barang sangat banyak (x → ∞), batas keuntungan maksimum adalah...", opt: ["A. 3 juta rupiah", "B. 5 juta rupiah", "C. 6 juta rupiah", "D. 9 juta rupiah", "E. 18 juta rupiah"], ans: "C" },
+            { id: 17, q: "Karton 80 cm x 50 cm dibuat kotak tanpa tutup memotong persegi x cm di sudutnya. Ukuran x agar volume maksimum memenuhi persamaan...", opt: ["A. 12x² - 520x + 4000 = 0", "B. 12x² - 260x + 4000 = 0", "C. 4x² - 130x + 1000 = 0", "D. 3x² - 65x + 250 = 0", "E. 6x² - 130x + 500 = 0"], ans: "A" },
+            { id: 18, q: "Turunan pertama dari fungsi f(x) = (2x² - 5)⁴ adalah f'(x) = ...", opt: ["A. 8x(2x² - 5)³", "B. 16x(2x² - 5)³", "C. 4(2x² - 5)³", "D. 8(2x² - 5)³", "E. 16x²(2x² - 5)³"], ans: "B" },
+            { id: 19, q: "Nilai maksimum relatif dari fungsi f(x) = -x³ + 3x² + 9x - 5 adalah...", opt: ["A. 12", "B. 16", "C. 20", "D. 22", "E. 27"], ans: "D" },
+            { id: 20, q: "Persamaan garis singgung pada kurva y = x² - 4x + 3 di titik berabsis x = 3 adalah...", opt: ["A. y = 2x - 6", "B. y = 2x - 3", "C. y = 4x - 12", "D. y = -2x + 6", "E. y = 2x + 3"], ans: "A" },
+            { id: 21, q: "Nilai dari lim (x→4) (x - 4) / (√x - 2) adalah...", opt: ["A. 1", "B. 2", "C. 4", "D. 8", "E. 16"], ans: "C" },
+            { id: 22, q: "Jika f(x) = √(3x² + 4), maka turunan pertama f'(x) adalah...", opt: ["A. 3x / √(3x² + 4)", "B. 6x / √(3x² + 4)", "C. 1 / (2√(3x² + 4))", "D. 3 / √(3x² + 4)", "E. 6 / √(3x² + 4)"], ans: "A" },
+            { id: 23, q: "Titik belok dari kurva f(x) = x³ - 6x² + 9x + 2 terletak pada koordinat...", opt: ["A. (2, 4)", "B. (2, 6)", "C. (3, 2)", "D. (1, 6)", "E. (2, 2)"], ans: "A" },
+            { id: 24, q: "Nilai dari lim (x→∞) [√(25x² + 20x + 7) - (5x - 3)] adalah...", opt: ["A. 2", "B. 3", "C. 5", "D. 7", "E. 8"], ans: "C" },
+            { id: 25, q: "Biaya total B(x) = x² - 40x + 500. Biaya produksi minimum dicapai jika diproduksi barang sebanyak...", opt: ["A. 10 unit", "B. 15 unit", "C. 20 unit", "D. 25 unit", "E. 30 unit"], ans: "C" }
         ];
 
         let siswaData = {};
@@ -248,7 +248,6 @@
                 `;
             }).join('');
 
-            // Update status tombol navigasi
             document.getElementById('btnPrev').disabled = idx === 0;
             document.getElementById('btnNext').disabled = idx === bankSoal.length - 1;
             
@@ -307,14 +306,12 @@
         function kirimUjian() {
             clearInterval(timerInterval);
 
-            // Hitung Skor
             let benar = 0;
             bankSoal.forEach(s => {
                 if(jawabanSiswa[s.id] === s.ans) benar++;
             });
             const nilai = Math.round((benar / bankSoal.length) * 100);
 
-            // Isi nilai ke Form Tersembunyi
             document.getElementById('gNama').value = siswaData.nama;
             document.getElementById('gKelas').value = siswaData.kelas;
             document.getElementById('gAbsen').value = siswaData.absen;
@@ -324,10 +321,8 @@
             document.getElementById('gNilai').value = nilai;
             document.getElementById('gTimestamp').value = new Date().toLocaleString("id-ID");
 
-            // Submit form tersembunyi ke Google Sheets (Pasti terkirim 100%)
             document.getElementById('googleForm').submit();
 
-            // Tampilkan Halaman Hasil
             document.getElementById('displayNilai').innerText = nilai;
             document.getElementById('displayJumlahBenar').innerText = `Benar: ${benar} / ${bankSoal.length} Soal`;
             document.getElementById('sectionSoal').classList.add('hidden');
