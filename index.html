@@ -144,18 +144,19 @@
     </main>
 
     <!-- HIDDEN FORM + IFRAME UNTUK GUARANTEED SUBMIT KE GOOGLE SHEETS -->
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-    <form id="googleForm" action="<form id="googleForm" action="https://script.google.com/macros/s/AKfycbzo8ZdacqMnKZCr-Dzx2gOHfpEy0rGprScDDIshR-1GyippWYYa70W1gkmzB4bVxfsx2w/exec" method="POST" target="hidden_iframe" class="hidden">" method="POST" target="hidden_iframe" class="hidden">
-        <input type="hidden" name="nama" id="gNama">
-        <input type="hidden" name="kelas" id="gKelas">
-        <input type="hidden" name="absen" id="gAbsen">
-        <input type="hidden" name="email" id="gEmail">
-        <input type="hidden" name="benar" id="gBenar">
-        <input type="hidden" name="durasi" id="gDurasi">
-        <input type="hidden" name="nilai" id="gNilai">
-        <input type="hidden" name="timestamp" id="gTimestamp">
-    </form>
+    <!-- PASTIKAN BARIS INI TERTULIS DENGAN BENAR -->
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
+<form id="googleForm" action="https://script.google.com/macros/s/AKfycbz8-AIh1VWlmS0l8ih82VDrT5I5wmlPeKRJ1VLbiRC7GEU7S8I9_i0MK_IoLBfy0PHqEQ/exec" method="POST" target="hidden_iframe" class="hidden">
+    <input type="hidden" name="nama" id="gNama">
+    <input type="hidden" name="kelas" id="gKelas">
+    <input type="hidden" name="absen" id="gAbsen">
+    <input type="hidden" name="email" id="gEmail">
+    <input type="hidden" name="benar" id="gBenar">
+    <input type="hidden" name="durasi" id="gDurasi">
+    <input type="hidden" name="nilai" id="gNilai">
+    <input type="hidden" name="timestamp" id="gTimestamp">
+</form>
     <script>
         const bankSoal = [
             { id: 1, q: "Sebuah perusahaan memodelkan fungsi biaya harian C(x) = (x² + 7x + 12) / (x + 3). Jika kapasitas produksi mendekati x = 4 unit, maka perkiraan biaya produksi harian perusahaan tersebut adalah...", opt: ["A. 6 juta rupiah", "B. 7 juta rupiah", "C. 8 juta rupiah", "D. 9 juta rupiah", "E. 10 juta rupiah"], ans: "C" },
